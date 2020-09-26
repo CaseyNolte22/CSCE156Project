@@ -1,0 +1,128 @@
+{
+"products":[
+  {
+    "type": "T",
+    "costPerMile": 18.97,
+    "code": "WZ049e",
+    "label": "Ford"
+  },
+  {
+    "type": "R",
+    "dailyCost": 90.8,
+    "deposit": 32.09,
+    "cleaningFee": 39.84,
+    "code": "JI578c",
+    "label": "Dodge"
+  },
+  {
+    "type": "T",
+    "costPerMile": 33.78,
+    "code": "UQ170h",
+    "label": "GMC"
+  },
+  {
+    "type": "F",
+    "partsCost": 64.44,
+    "hourlyLaborCost": 50.87,
+    "code": "EO542c",
+    "label": "Oldsmobile"
+  },
+  {
+    "type": "T",
+    "costPerMile": 83.73,
+    "code": "SK087n",
+    "label": "Plymouth"
+  },
+  {
+    "type": "T",
+    "costPerMile": 92.19,
+    "code": "CH610t",
+    "label": "Volkswagen"
+  },
+  {
+    "type": "T",
+    "costPerMile": 20.71,
+    "code": "KQ086g",
+    "label": "Dodge"
+  },
+  {
+    "type": "R",
+    "dailyCost": 4.0,
+    "deposit": 51.68,
+    "cleaningFee": 37.92,
+    "code": "LV975o",
+    "label": "Land Rover"
+  },
+  {
+    "type": "T",
+    "costPerMile": 10.09,
+    "code": "UF190b",
+    "label": "Plymouth"
+  },
+  {
+    "type": "C",
+    "unitCost": 57.9,
+    "code": "UP194m",
+    "label": "Suzuki"
+  },
+  {
+    "type": "T",
+    "costPerMile": 66.66,
+    "code": "JD789f",
+    "label": "Toyota"
+  },
+  {
+    "type": "C",
+    "unitCost": 71.97,
+    "code": "JG062z",
+    "label": "Buick"
+  },
+  {
+    "type": "C",
+    "unitCost": 38.76,
+    "code": "XN120p",
+    "label": "Porsche"
+  },
+  {
+    "type": "T",
+    "costPerMile": 73.23,
+    "code": "PZ184y",
+    "label": "Ford"
+  },
+  {
+    "type": "T",
+    "costPerMile": 65.58,
+    "code": "PC326q",
+    "label": "Audi"
+  },
+  {
+    "type": "C",
+    "unitCost": 88.57,
+    "code": "QX252d",
+    "label": "Ford"
+  },
+  {
+    "type": "T",
+    "costPerMile": 29.61,
+    "code": "XW275y",
+    "label": "Nissan"
+  },
+  {
+    "type": "C",
+    "unitCost": 82.35,
+    "code": "UZ189p",
+    "label": "Suzuki"
+  },
+  {
+    "type": "T",
+    "costPerMile": 32.56,
+    "code": "RS112y",
+    "label": "Mitsubishi"
+  },
+  {
+    "type": "T",
+    "costPerMile": 19.0,
+    "code": "MG514z",
+    "label": "Infiniti"
+  }
+]}
