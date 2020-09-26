@@ -1,3 +1,9 @@
+/**
+ * Repair class, extends Product class
+ * 
+ * @author Casey Nolte
+ * @author Jack Kieny
+ */
 package com.bc;
 
 public class Repair extends Product {
@@ -23,12 +29,6 @@ public class Repair extends Product {
 
 	public double getHourlyLaborCost() {
 		return hourlyLaborCost;
-	}
-
-	@Override
-	public String toString() {
-		return "Repair [type=" + type + ", partsCost=" + partsCost + ", hourlyLaborCost=" + hourlyLaborCost
-				+ ", toString()=" + super.toString() + "]";
 	}
 
 }

@@ -1,9 +1,16 @@
+/**
+ * Contains the main method that generates Json files from flat data files
+ * 
+ * @author Casey Nolte
+ * @author Jack Kieny
+ */
+
 package com.bc;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class DataConverter{
+public class DataConverter {
 
 	public static void main(String[] args) {
 
@@ -13,13 +20,13 @@ public class DataConverter{
 
 		ArrayList<Person> persons = new ArrayList<Person>();
 		persons = FlatParser.personParse(personsFile);
-		
+
 		ArrayList<Customer> customers = new ArrayList<Customer>();
 		customers = FlatParser.customerParse(customerFile, persons);
 
 		ArrayList<Product> products = new ArrayList<Product>();
 		products = FlatParser.productParse(productsFile);
-		
+
 		JsonWrite.printJSON("data/Persons.json", persons, "persons");
 		JsonWrite.printJSON("data/Customers.json", customers, "customers");
 		JsonWrite.printJSON("data/Products.json", products, "products");

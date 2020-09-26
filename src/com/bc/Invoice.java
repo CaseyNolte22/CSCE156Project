@@ -1,3 +1,9 @@
+/**
+ * Invoice class
+ * 
+ * @author Casey Nolte
+ * @author Jack Kieny
+ */
 package com.bc;
 
 import java.util.ArrayList;
@@ -32,7 +38,5 @@ public class Invoice {
 	public ArrayList<Product> getProductList() {
 		return productList;
 	}
-	
-	
 
 }

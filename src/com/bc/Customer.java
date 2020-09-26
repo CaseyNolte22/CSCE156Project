@@ -1,3 +1,10 @@
+/**
+ * Customer class
+ * 
+ * @author Casey Nolte
+ * @author Jack Kieny
+ */
+
 package com.bc;
 
 public class Customer {

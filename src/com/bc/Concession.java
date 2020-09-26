@@ -1,3 +1,9 @@
+/**
+ * Concession class, extended from Product class
+ * 
+ * @author Casey Nolte
+ * @author Jack Kieny
+ */
 package com.bc;
 
 public class Concession extends Product {
@@ -17,11 +23,6 @@ public class Concession extends Product {
 
 	public double getUnitCost() {
 		return unitCost;
-	}
-
-	@Override
-	public String toString() {
-		return "Concession [type=" + type + ", unitCost=" + unitCost + ", toString()=" + super.toString() + "]";
 	}
 
 }

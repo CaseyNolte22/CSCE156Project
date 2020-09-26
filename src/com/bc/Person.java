@@ -1,3 +1,9 @@
+/**
+ * Person class
+ * 
+ * @author Casey Nolte
+ * @author Jack Kieny
+ */
 package com.bc;
 
 import java.util.ArrayList;
@@ -38,12 +44,6 @@ public class Person {
 
 	public ArrayList<String> getEmails() {
 		return emails;
-	}
-
-	@Override
-	public String toString() {
-		return "Person [personCode=" + personCode + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", personAddress=" + personAddress + ", emails=" + emails + "]";
 	}
 
 }

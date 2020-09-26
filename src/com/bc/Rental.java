@@ -1,3 +1,9 @@
+/**
+ * Rental class, extends Product class
+ * 
+ * @author Casey Nolte
+ * @author Jack Kieny
+ */
 package com.bc;
 
 public class Rental extends Product {
@@ -28,12 +34,6 @@ public class Rental extends Product {
 
 	public double getCleaningFee() {
 		return cleaningFee;
-	}
-
-	@Override
-	public String toString() {
-		return "Rental [type=" + type + ", dailyCost=" + dailyCost + ", deposit=" + deposit + ", cleaningFee="
-				+ cleaningFee + ", toString()=" + super.toString() + "]";
 	}
 
 }

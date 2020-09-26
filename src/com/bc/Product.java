@@ -1,3 +1,9 @@
+/**
+ * Product class, extended by Rental, Repair, Towing, and Concession classes
+ * 
+ * @author Casey Nolte
+ * @author Jack Kieny
+ */
 package com.bc;
 
 public class Product {
@@ -16,11 +22,6 @@ public class Product {
 
 	public String getLabel() {
 		return label;
-	}
-
-	@Override
-	public String toString() {
-		return "Products [code=" + code + ", label=" + label + "]";
 	}
 
 }

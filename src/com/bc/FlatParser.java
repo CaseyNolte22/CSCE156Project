@@ -1,7 +1,8 @@
-//Contains parsing stuff
-
-
-
+/* Contains static methods for parsing the flat data files.
+ * 
+ * @author Casey Nolte
+ * @author Jack Kieny
+ */
 package com.bc;
 
 import java.io.File;
@@ -11,6 +12,12 @@ import java.util.Scanner;
 
 public class FlatParser {
 
+	/**
+	 * Parses the flat persons file
+	 * 
+	 * @param file the filepath for the file to be parsed
+	 * @return an ArrayList containing parsed persons
+	 */
 	public static ArrayList<Person> personParse(File file) {
 		Scanner p;
 		try {
@@ -44,6 +51,13 @@ public class FlatParser {
 
 	}
 
+	/**
+	 * Parses the customer flat data file
+	 * 
+	 * @param file    the file path for the file to be parsed
+	 * @param persons an ArrayList of person objects
+	 * @return an ArrayList containing customer objects
+	 */
 	public static ArrayList<Customer> customerParse(File file, ArrayList<Person> persons) {
 		Scanner s;
 		try {
@@ -52,7 +66,6 @@ public class FlatParser {
 			throw new RuntimeException(fnfe);
 		}
 
-		// Parsing Customers
 		int entries = s.nextInt();
 		ArrayList<Customer> customers = new ArrayList<Customer>();
 		s.nextLine();
@@ -79,7 +92,13 @@ public class FlatParser {
 		s.close();
 		return customers;
 	}
-	
+
+	/**
+	 * Parses the product flat data file
+	 * 
+	 * @param file the file path for the file to be parsed
+	 * @return an ArrayList containing customer objects
+	 */
 	public static ArrayList<Product> productParse(File file) {
 		Scanner r;
 		try {
@@ -87,8 +106,6 @@ public class FlatParser {
 		} catch (FileNotFoundException fnfe) {
 			throw new RuntimeException(fnfe);
 		}
-
-		// Parsing Products
 		int entries2 = r.nextInt();
 		ArrayList<Product> products = new ArrayList<Product>();
 		r.nextLine();

@@ -1,3 +1,9 @@
+/**
+ * Towing class, extension of Product class
+ * 
+ * @author Casey Nolte
+ * @author Jack Kieny
+ */
 package com.bc;
 
 public class Towing extends Product {
@@ -17,11 +23,6 @@ public class Towing extends Product {
 
 	public double getCostPerMile() {
 		return costPerMile;
-	}
-
-	@Override
-	public String toString() {
-		return "Towing [type=" + type + ", costPerMile=" + costPerMile + ", toString()=" + super.toString() + "]";
 	}
 
 }

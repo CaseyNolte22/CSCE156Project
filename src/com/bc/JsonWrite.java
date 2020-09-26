@@ -1,3 +1,9 @@
+/**
+ * Contains method used for writing to json
+ * 
+ * @author Casey Nolte
+ * @author Jack Kieny
+ */
 package com.bc;
 
 import java.io.File;
@@ -9,7 +15,13 @@ import com.google.gson.GsonBuilder;
 
 //Class that contains a method for printing objects in an arraylist to a json
 public class JsonWrite {
-
+	/**
+	 * 
+	 * @param <T>
+	 * @param filePath path to write json to
+	 * @param list     Array list being converted to json
+	 * @param header   Header input
+	 */
 	public static <T> void printJSON(String filePath, ArrayList<T> list, String header) {
 		GsonBuilder builder = new GsonBuilder();
 		builder.setPrettyPrinting();
