@@ -8,7 +8,9 @@
 \definecolor{darkmagenta}{rgb}{0.55,0,0.55}
 \definecolor{left}{HTML}{041832}
 \definecolor{secondary}{HTML}{241024}
-
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
 \usepackage[colorlinks=true,
 		     urlcolor=darkblue,
 		     citecolor=darkergreen,
@@ -91,58 +93,64 @@ In it's current iteration, BumprCars Invoicing includes functionality for the pa
 
 \subsubsection{Definitions}
 
-[Define any terms that require a definition--domain specific terms, non-standard terms, or terms that are used in non-standard ways]
-
-\subsubsection{Abbreviations \& Acronyms}
-
-[Define all abbreviations and acronyms used in this document here.  This relieves you of the need to define such things within the context of the document itself and provides an easy reference for the reader.]
-
 \begin{description}
-  \item[ACM] Association for Computing Machinery
-  \item[IEEE] Institute of Electrical and Electronics Engineers
-  \item[UAV] Unmanned Aerial Vehicle
-\end{description}
+  \item[Flat File] Non-standard data file
+\end{description} 
+
+%\subsubsection{Abbreviations \& Acronyms}
+
+%[Define all abbreviations and acronyms used in this document here.  This relieves you of the need to define such things within the context of the document itself and provides an easy reference for the reader.]
+
+%\begin{description}
+%  \item[ACM] Association for Computing Machinery
+%  \item[IEEE] Institute of Electrical and Electronics Engineers
+%  \item[UAV] Unmanned Aerial Vehicle
+%\end{description}
   
 \section{Overall Design Description}
-  
-[Provide an overall summary/description of the project.  Identify the major design components, technologies, etc.]
+ Currently, BumprCars Invoicing contains classes for the storage of multiple different types of data, and methods for parsing data files and creating more user friendly data output. 
+%[Provide an overall summary/description of the project.  Identify the major design components, technologies, etc.]
   
 \subsection{Alternative Design Options}
-
-[If applicable, describe and discuss alternative design options that you considered and discuss why they were not chosen.  What advantages and disadvantages do the alternatives provide and what advantage/disadvantages do the chosen design elements provide.  Provide some justification for why the chosen elements? advantages/disadvantages outweighed the alternatives]
+At the moment, significant alternative options have not been discussed.
+%If applicable, describe and discuss alternative design options that you considered and discuss why they were not chosen.  What advantages and disadvantages do the alternatives provide and what advantage/disadvantages do the chosen design elements provide.  Provide some justification for why the chosen elements? advantages/disadvantages outweighed the alternatives
 
 \section{Detailed Component Description}
 
-[Provide an introduction to this section here]
+This section will detail multiple aspects of the BumprCars Invoicing system. Currently, it contains information about the class layout of the program. 
 
-\subsection{Database Design}
+%\subsection{Database Design}
 
-[This section will be used to detail your database schema design (Phase III).  In earlier phases this section may be omitted or a short note indicating that details will be provided in a subsequent revision of this document.]
+%This section will be used to detail your database schema design (Phase III).  In earlier phases this section may be omitted or a short note indicating that details will be provided in a subsequent revision of this document.
 
-\subsubsection{Component Testing Strategy}
+%\subsubsection{Component Testing Strategy}
 
-[This section will describe your approach to testing this particular component.]
+%This section will describe your approach to testing this particular component.]
 
 \subsection{Class/Entity Model}
 
-[This section should detail your Java classes--their state, interface and how they relate to each other.  It is highly recommended that you document these elements using tables, UML diagrams, and other visually-informative methods.  Figures and tables should have proper captions and be referenced in the main text just like in Figure \ref{figure:uav}.  You should provide subsections to organize your presentation as applicable.]
+In the BumprCars Invoicing program, the invoice, person, customer, and product classes each hold data of their respective type. Additionally, the product class is a superclass for repair, rental, towing, and concession classes. The FlatParser class contains methods used to parse flat data files and create instances of the data classes. The address class is used in the construction of the person class, and the person class is used in the construction of the customer class. The DataConverter class contains a main method that takes raw input files. See \ref{figure:classdiagram} for a visual representation of the class layout. 
 
-\begin{figure}
+%[This section should detail your Java classes--their state, interface and how they relate to each other.  It is highly recommended that you document these elements using tables, UML diagrams, and other visually-informative methods.  Figures and tables should have proper captions and be referenced in the main text just like in Figure \ref{figure:designDocument.png}.  You should provide subsections to organize your presentation as applicable.]
+
+\begin{figure}[!h]
 \centering
-\includegraphics[scale=1.0]{../uavsUNL}
-\caption{A UAV (Unmanned Aerial Vehicle) soars above Memorial Stadium.  Figures should be numbered and properly captioned.}
-\label{figure:uav}
+\includegraphics[max size={\textwidth}{\textheight}]{ClassDiagram.png}
+\caption{Class Diagram for BumprCars Invoicing}
+\label{figure:classdiagram}
 \end{figure}
 
 \subsubsection{Component Testing Strategy}
 
-[This section will describe your approach to testing this particular component.  Describe any test cases, unit tests, or other testing components or artifacts that you developed for this component.  What were the outcomes of the tests?  Did the outcomes affect development or force a redesign?]
+A multitude of test cases were run after phase 1 of the project that tested that parsing and saving of data from flat files, as well as the creation of json files. These test cases resulted in changes to the parsing system in order to deal with changing amounts of emails in the flat files. 
+%This section will describe your approach to testing this particular component.  Describe any test cases, unit tests, or other testing components or artifacts that you developed for this component.  What were the outcomes of the tests?  Did the outcomes affect development or force a redesign?]
 
-\subsection{Database Interface}
+%\subsection{Database Interface}
 
-[This section will be used to detail phase IV where you modify your application to read from a database rather than from flat files.  This section will detail the API that you designed--how it conformed to the requirements, how it worked, other tools or methods that you designed to assist, how it handles corner cases and the expectations or restrictions that you?ve placed on the user of the API.  In earlier phases this section may be omitted or a short note indicating that details will be provided in a subsequent revision of this document.  An example table is presented
-as Table \ref{table:assignmentPerformance}.]
+%[This section will be used to detail phase IV where you modify your application to read from a database rather than from flat files.  This section will detail the API that you designed--how it conformed to the requirements, how it worked, other tools or methods that you designed to assist, how it handles corner cases and the expectations or restrictions that you?ve placed on the user of the API.  In earlier phases this section may be omitted or a short note indicating that details will be provided in a subsequent revision of this document.  An example table is presented
+%as Table \ref{table:assignmentPerformance}.]
 
+\begin{comment}
 \begin{table}
 \centering
 \caption{Average Performance on Assignments; on-time vs. late and individual vs partners.  In general, captions for Tables should appear above the table.}
@@ -165,26 +173,28 @@ Diff & NA & \color{red}{4.88\%} & \color{green}{3.90\%} & \color{green}{3.78\%} 
 \hline
 \end{tabular}
 \end{table}
+\end{comment}
 
-\subsubsection{Component Testing Strategy}
+%\subsubsection{Component Testing Strategy}
 
-[This section will describe your approach to testing this particular component.  Describe any test cases, unit tests, or other testing components or artifacts that you developed for this component.  What were the outcomes of the tests?  Did the outcomes affect development or force a redesign?]
+%[This section will describe your approach to testing this particular component.  Describe any test cases, unit tests, or other testing components or artifacts that you developed for this component.  What were the outcomes of the tests?  Did the outcomes affect development or force a redesign?]
 
-\subsection{Design \& Integration of Data Structures}
+%\subsection{Design \& Integration of Data Structures}
 
-[This section will be used to detail phase V where you design an original data structure and integrate it into your application.  In earlier phases this section may be omitted or a short note indicating that details will be provided in a subsequent revision of this document?]
+%[This section will be used to detail phase V where you design an original data structure and integrate it into your application.  In earlier phases this section may be omitted or a short note indicating that details will be provided in a subsequent revision of this document?]
 
-\subsubsection{Component Testing Strategy}
+%\subsubsection{Component Testing Strategy}
 
-[This section will describe your approach to testing this particular component.  Describe any test cases, unit tests, or other testing components or artifacts that you developed for this component.  What were the outcomes of the tests?  Did the outcomes affect development or force a redesign?]
+%[This section will describe your approach to testing this particular component.  Describe any test cases, unit tests, or other testing components or artifacts that you developed for this component.  What were the outcomes of the tests?  Did the outcomes affect development or force a redesign?]
 
 \subsection{Changes \& Refactoring}
 
-[During the development lifecycle, designs and implementations may need to change to respond to new   requirements, fix bugs or other issues, or to improve earlier poor or ill-fitted designs.  Over the course of this project such changes and refactoring of implementations (to make them more efficient, more convenient, etc.) should be documented in this section.  If not applicable, this section may be omitted or kept as a placeholder with a short note indicating that no major changes or refactoring have been made.]
+Between Phase 1 and Phase 2, minor changes to class names were made, and small updates to constructor parameters were made.
+%[During the development lifecycle, designs and implementations may need to change to respond to new   requirements, fix bugs or other issues, or to improve earlier poor or ill-fitted designs.  Over the course of this project such changes and refactoring of implementations (to make them more efficient, more convenient, etc.) should be documented in this section.  If not applicable, this section may be omitted or kept as a placeholder with a short note indicating that no major changes or refactoring have been made.]
 
-\section{Additional Material}
+%\section{Additional Material}
 
-[This is an optional section in which you may place other materials that do not necessarily fit within the organization of the other sections.]
+%[This is an optional section in which you may place other materials that do not necessarily fit within the organization of the other sections.]
 
 \nocite{*}
 \bibliographystyle{plain}
