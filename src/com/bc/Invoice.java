@@ -16,7 +16,6 @@ public class Invoice {
 	private ArrayList<Product> productList;
 
 	public Invoice(String invoiceCode, Person ownerCode, Customer customerCode, ArrayList<Product> productList) {
-		super();
 		this.invoiceCode = invoiceCode;
 		this.ownerCode = ownerCode;
 		this.customerCode = customerCode;
