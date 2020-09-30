@@ -38,10 +38,15 @@ public class FlatParser {
 			String addressTokens[] = tokens[2].split(",");
 			Address address = new Address(addressTokens[0], addressTokens[1], addressTokens[2], addressTokens[3],
 					addressTokens[4]);
-			String emailTokens[] = tokens[3].split(",");
 			ArrayList<String> emails = new ArrayList<String>();
-			for (int j = 0; j < emailTokens.length; j++) {
-				emails.add(emailTokens[j]);
+			if (tokens.length >= 4) {
+
+				String emailTokens[] = tokens[3].split(",");
+				for (int j = 0; j < emailTokens.length; j++) {
+					emails.add(emailTokens[j]);
+				}
+			} else {
+				emails = null;
 			}
 			Person e = new Person(personsCode, firstName, lastName, address, emails);
 			persons.add(e);
@@ -159,5 +164,44 @@ public class FlatParser {
 		}
 		r.close();
 		return products;
+
+	}
+
+	public static ArrayList<Invoice> invoiceParse(File file, ArrayList<Person> persons, ArrayList<Customer> customers,
+			ArrayList<Product> products) {
+		Scanner s;
+		try {
+			s = new Scanner(file);
+		} catch (FileNotFoundException fnfe) {
+			throw new RuntimeException(fnfe);
+		}
+		int entries = s.nextInt();
+		ArrayList<Invoice> invoices = new ArrayList<Invoice>();
+		s.nextLine();
+		for (int i = 0; i < entries; i++) {
+			String line = s.nextLine();
+			String tokens[] = line.split(";");
+			String invoiceCode = tokens[0];
+			String personContactCode = tokens[1];
+			String customerContactCode = tokens[2];
+			Person personContact = null;
+			Customer customerContact = null;
+			for (Person item : persons) {
+				if (personContactCode.equals(item.getPersonCode())) {
+					personContact = item;
+				}
+			}
+			for (Customer item : customers) {
+				if (customerContactCode.equals(item.getCustomerCode())) {
+					customerContact = item;
+				}
+			}
+			String productTokens[] = tokens[3].split(",");
+			for (int j = 0; i < productTokens.length; j++ ) {
+				
+			}
+		}
+		s.close();
+		return invoices;
 	}
 }
