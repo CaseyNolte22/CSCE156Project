@@ -10,6 +10,8 @@ public class Concession extends Product {
 
 	private char type = 'C';
 	private double unitCost;
+	private int quantity;
+	private Repair associatedRepair;
 
 	public Concession(String code, String label, char type, double unitCost) {
 		super(code, label);
@@ -17,12 +19,27 @@ public class Concession extends Product {
 		this.unitCost = unitCost;
 	}
 
+	public Concession(Concession old, int quantity, Repair associatedRepair) {
+		super(old.getCode(), old.getLabel());
+		this.associatedRepair = associatedRepair;
+		this.quantity = quantity;
+	}
+
 	public char getType() {
+
 		return type;
 	}
 
 	public double getUnitCost() {
 		return unitCost;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public Repair getAssociatedRepair() {
+		return associatedRepair;
 	}
 
 }

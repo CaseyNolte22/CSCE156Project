@@ -11,12 +11,18 @@ public class Repair extends Product {
 	private char type = 'F';
 	private double partsCost;
 	private double hourlyLaborCost;
+	private double hoursWorked;
 
 	public Repair(String code, String label, char type, double partsCost, double hourlyLaborCost) {
 		super(code, label);
 		this.type = type;
 		this.partsCost = partsCost;
 		this.hourlyLaborCost = hourlyLaborCost;
+	}
+
+	public Repair(Repair old, double hoursWorked) {
+		super(old.getCode(), old.getLabel());
+		this.hoursWorked = hoursWorked;
 	}
 
 	public char getType() {
@@ -29,6 +35,10 @@ public class Repair extends Product {
 
 	public double getHourlyLaborCost() {
 		return hourlyLaborCost;
+	}
+
+	public double getHoursWorked() {
+		return hoursWorked;
 	}
 
 }

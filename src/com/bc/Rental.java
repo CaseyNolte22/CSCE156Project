@@ -11,6 +11,7 @@ public class Rental extends Product {
 	private double dailyCost;
 	private double deposit;
 	private double cleaningFee;
+	private double daysRented;
 
 	public Rental(String code, String label, char type, double dailyCost, double deposit, double cleaningFee) {
 		super(code, label);
@@ -18,6 +19,11 @@ public class Rental extends Product {
 		this.dailyCost = dailyCost;
 		this.deposit = deposit;
 		this.cleaningFee = cleaningFee;
+	}
+
+	public Rental(Rental old, double daysRented) {
+		super(old.getCode(), old.getLabel());
+		this.daysRented = daysRented;
 	}
 
 	public char getType() {
@@ -34,6 +40,10 @@ public class Rental extends Product {
 
 	public double getCleaningFee() {
 		return cleaningFee;
+	}
+
+	public double getDaysRented() {
+		return daysRented;
 	}
 
 }
