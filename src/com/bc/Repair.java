@@ -23,6 +23,8 @@ public class Repair extends Product {
 	public Repair(Repair old, double hoursWorked) {
 		super(old.getCode(), old.getLabel());
 		this.hoursWorked = hoursWorked;
+		this.partsCost = old.getPartsCost();
+		this.hourlyLaborCost = old.getHourlyLaborCost();
 	}
 
 	public char getType() {
@@ -39,6 +41,12 @@ public class Repair extends Product {
 
 	public double getHoursWorked() {
 		return hoursWorked;
+	}
+
+	@Override
+	public String toString() {
+		return "Repair [type=" + type + ", partsCost=" + partsCost + ", hourlyLaborCost=" + hourlyLaborCost
+				+ ", hoursWorked=" + hoursWorked + "]";
 	}
 
 }

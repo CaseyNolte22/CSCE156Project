@@ -21,6 +21,7 @@ public class Towing extends Product {
 	public Towing(Towing old, double milesTowed) {
 		super(old.getCode(), old.getLabel());
 		this.milesTowed = milesTowed;
+		this.costPerMile = old.getCostPerMile();
 	}
 
 	public char getType() {
@@ -33,6 +34,11 @@ public class Towing extends Product {
 
 	public double getMilesTowed() {
 		return milesTowed;
+	}
+
+	@Override
+	public String toString() {
+		return "Towing [type=" + type + ", costPerMile=" + costPerMile + ", milesTowed=" + milesTowed + "]";
 	}
 
 }

@@ -46,4 +46,10 @@ public class Person {
 		return emails;
 	}
 
+	@Override
+	public String toString() {
+		return "Person [personCode=" + personCode + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", personAddress=" + personAddress + ", emails=" + emails + "]";
+	}
+
 }

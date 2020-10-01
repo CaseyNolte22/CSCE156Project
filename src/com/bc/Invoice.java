@@ -38,4 +38,10 @@ public class Invoice {
 		return productList;
 	}
 
+	@Override
+	public String toString() {
+		return "Invoice [invoiceCode=" + invoiceCode + ", ownerCode=" + ownerCode + ", customerCode=" + customerCode
+				+ ", productList=" + productList + "]";
+	}
+
 }

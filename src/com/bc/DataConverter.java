@@ -27,6 +27,8 @@ public class DataConverter {
 		ArrayList<Product> products = new ArrayList<Product>();
 		products = FlatParser.productParse(productsFile);
 
+		System.out.print(products.get(0).getClass());
+		
 		JsonWrite.printJSON("data/Persons.json", persons, "persons");
 		JsonWrite.printJSON("data/Customers.json", customers, "customers");
 		JsonWrite.printJSON("data/Products.json", products, "products");

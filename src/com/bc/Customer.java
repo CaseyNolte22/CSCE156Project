@@ -42,4 +42,10 @@ public class Customer {
 		return customerAddress;
 	}
 
+	@Override
+	public String toString() {
+		return "Customer [customerCode=" + customerCode + ", customerType=" + customerType + ", name=" + name
+				+ ", contact=" + contact + ", customerAddress=" + customerAddress + "]";
+	}
+
 }

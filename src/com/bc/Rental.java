@@ -23,6 +23,9 @@ public class Rental extends Product {
 
 	public Rental(Rental old, double daysRented) {
 		super(old.getCode(), old.getLabel());
+		this.dailyCost = old.getDailyCost();
+		this.deposit = old.getDeposit();
+		this.cleaningFee = old.getCleaningFee();
 		this.daysRented = daysRented;
 	}
 
@@ -44,6 +47,12 @@ public class Rental extends Product {
 
 	public double getDaysRented() {
 		return daysRented;
+	}
+
+	@Override
+	public String toString() {
+		return "Rental [type=" + type + ", dailyCost=" + dailyCost + ", deposit=" + deposit + ", cleaningFee="
+				+ cleaningFee + ", daysRented=" + daysRented + "]";
 	}
 
 }

@@ -186,6 +186,7 @@ public class FlatParser {
 			String customerContactCode = tokens[2];
 			Person personContact = null;
 			Customer customerContact = null;
+			ArrayList<Product> productList = new ArrayList<Product>();
 			for (Person item : persons) {
 				if (personContactCode.equals(item.getPersonCode())) {
 					personContact = item;
@@ -197,9 +198,49 @@ public class FlatParser {
 				}
 			}
 			String productTokens[] = tokens[3].split(",");
-			for (int j = 0; i < productTokens.length; j++ ) {
+			for (int j = 0; j < productTokens.length; j++) {
+				String paramTokens[] = productTokens[j].split(":");
+				String productCode = paramTokens[0]; 
+				Product currentProduct = null;
+				for (Product item : products) {
+					if (productCode.equals(item.getCode())) {
+						currentProduct = item;
+					}
+				}
+				if (currentProduct instanceof Rental) {
+					double daysRented = Double.parseDouble(paramTokens[1]);
+					Product p = new Rental((Rental) currentProduct, daysRented);
+					productList.add(p);
+				} else if (currentProduct instanceof Repair) {
+					double hoursWorked = Double.parseDouble(paramTokens[1]);
+					Product p = new Repair((Repair) currentProduct, hoursWorked);
+					productList.add(p);
+				} else if (currentProduct instanceof Towing) {
+					double milesTowed = Double.parseDouble(paramTokens[1]);
+					Product p = new Towing((Towing) currentProduct, milesTowed);
+					productList.add(p);
+				} else if (currentProduct instanceof Concession) {
+					int quantity = Integer.parseInt(paramTokens[1]);
+					Product associatedRepair = null;
+					String repairCode;
+					if (paramTokens.length > 2) {
+						repairCode = paramTokens[2]; 
+					}
+					else {
+						repairCode = "";
+					}
 				
+					for (Product item : products) {
+						if (repairCode.equals(item.getCode())) {
+							associatedRepair = item;
+						}
+					}
+					Product p = new Concession((Concession) currentProduct, quantity, associatedRepair);
+					productList.add(p);
+				}
 			}
+			Invoice invoiceInstance = new Invoice(invoiceCode, personContact, customerContact, productList);
+			invoices.add(invoiceInstance);
 		}
 		s.close();
 		return invoices;
