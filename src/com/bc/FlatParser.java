@@ -25,10 +25,9 @@ public class FlatParser {
 		} catch (FileNotFoundException fnfe) {
 			throw new RuntimeException(fnfe);
 		}
-		int entries1 = p.nextInt();
 		ArrayList<Person> persons = new ArrayList<Person>();
 		p.nextLine();
-		for (int i = 0; i < entries1; i++) {
+		while (p.hasNextLine()) {
 			String line = p.nextLine();
 			String tokens[] = line.split(";");
 			String personsCode = tokens[0];
@@ -51,6 +50,7 @@ public class FlatParser {
 			Person e = new Person(personsCode, firstName, lastName, address, emails);
 			persons.add(e);
 		}
+
 		p.close();
 		return persons;
 
@@ -71,10 +71,9 @@ public class FlatParser {
 			throw new RuntimeException(fnfe);
 		}
 
-		int entries = s.nextInt();
 		ArrayList<Customer> customers = new ArrayList<Customer>();
 		s.nextLine();
-		for (int i = 0; i < entries; i++) {
+		while (s.hasNextLine()) {
 			String line = s.nextLine();
 			String tokens[] = line.split(";");
 			String customerCode = tokens[0];
@@ -94,6 +93,7 @@ public class FlatParser {
 			Customer e = new Customer(customerCode, customerType, customerName, contact, address);
 			customers.add(e);
 		}
+
 		s.close();
 		return customers;
 	}
@@ -111,10 +111,9 @@ public class FlatParser {
 		} catch (FileNotFoundException fnfe) {
 			throw new RuntimeException(fnfe);
 		}
-		int entries2 = r.nextInt();
 		ArrayList<Product> products = new ArrayList<Product>();
 		r.nextLine();
-		for (int i = 0; i < entries2; i++) {
+		while (r.hasNextLine()) {
 			String line = r.nextLine();
 			String tokens[] = line.split(";");
 			String productCode = tokens[0];
@@ -162,6 +161,7 @@ public class FlatParser {
 			}
 
 		}
+
 		r.close();
 		return products;
 
@@ -186,10 +186,10 @@ public class FlatParser {
 		} catch (FileNotFoundException fnfe) {
 			throw new RuntimeException(fnfe);
 		}
-		int entries = s.nextInt();
+
 		ArrayList<Invoice> invoices = new ArrayList<Invoice>();
 		s.nextLine();
-		for (int i = 0; i < entries; i++) {
+		while (s.hasNextLine()) {
 			String line = s.nextLine();
 			String tokens[] = line.split(";");
 			String invoiceCode = tokens[0];
@@ -252,6 +252,7 @@ public class FlatParser {
 			Invoice invoiceInstance = new Invoice(invoiceCode, personContact, customerContact, productList);
 			invoices.add(invoiceInstance);
 		}
+
 		s.close();
 		return invoices;
 	}

@@ -38,6 +38,10 @@ public class Invoice {
 		return productList;
 	}
 
+	/**
+	 * 
+	 * @return subtotal for a product item in the invoice
+	 */
 	public double getSubtotal() {
 		double sum = 0;
 		for (Product item : productList) {
@@ -46,6 +50,10 @@ public class Invoice {
 		return sum;
 	}
 
+	/**
+	 * 
+	 * @return fees for a given invoice
+	 */
 	public double getFees() {
 		if (customerCode.getCustomerType().equals("B")) {
 			return 75.5;
@@ -54,6 +62,11 @@ public class Invoice {
 		}
 	}
 
+	/**
+	 * 
+	 * @param total a pretax total for the invoice
+	 * @return the tax for the invoice based on customer type
+	 */
 	public double getTax(double total) {
 		double taxRate;
 		if (customerCode.getCustomerType().equals("B")) {
@@ -65,6 +78,10 @@ public class Invoice {
 		return tax;
 	}
 
+	/**
+	 * 
+	 * @return the amount of towing discount on an invoice item
+	 */
 	public double getTowingDiscount() {
 		double discountTotal = 0;
 		Set<String> types = new HashSet<String>();
@@ -86,22 +103,41 @@ public class Invoice {
 		return discountTotal;
 	}
 
+	/**
+	 * 
+	 * @return the amount of concession discount on an invoice item
+	 */
 	public double getConcessionDiscount() {
 		double discountTotal = 0;
+		Set<String> codes = new HashSet<String>();
+		for (Product item : productList) {
+			if (item instanceof Repair) {
+				codes.add(item.getCode());
+			}
+		}
 		for (Product item : productList) {
 			if (item instanceof Concession) {
 				if (((Concession) item).getAssociatedRepair() != null) {
-					discountTotal -= (.1 * item.getPrice());
+					if (codes.contains(((Concession) item).getAssociatedRepair().getCode())) {
+						discountTotal -= (.1 * item.getPrice());
+					}
 				}
 			}
 		}
 		return discountTotal;
 	}
 
+	/**
+	 * 
+	 * @param total post tax total
+	 * @return discount to applied after taxes
+	 */
 	public double getPostTaxDiscount(double total) {
 		double discountTotal = 0;
-		if ((customerCode.getContact().getEmails().size() >= 2) && (customerCode.getCustomerType().equals("P"))) {
-			discountTotal -= total * (.05);
+		if (customerCode.getContact().getEmails() != null) {
+			if ((customerCode.getContact().getEmails().size() >= 2) && (customerCode.getCustomerType().equals("P"))) {
+				discountTotal -= total * (.05);
+			}
 		}
 		return discountTotal;
 	}
