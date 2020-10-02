@@ -43,4 +43,9 @@ public class Address {
 		return country;
 	}
 
+	@Override
+	public String toString() {
+		return street + ", " + city + "," + state + " " + country + " " + zip;
+	}
+
 }

@@ -23,5 +23,12 @@ public class Product {
 	public String getLabel() {
 		return label;
 	}
+	
+	public char getType() {
+		return this.getType();
+	}
+	public double getPrice() {
+		return this.getPrice();
+	}
 
 }

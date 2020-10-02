@@ -167,6 +167,17 @@ public class FlatParser {
 
 	}
 
+	/**
+	 * Parses the flat invoice files. Gleans the invoice code, owner code, customer
+	 * code, and list of products. Requires input of person, customer, and product
+	 * arrays to function properly.
+	 * 
+	 * @param file
+	 * @param persons
+	 * @param customers
+	 * @param products
+	 * @return an ArrayList of Invoice Objects
+	 */
 	public static ArrayList<Invoice> invoiceParse(File file, ArrayList<Person> persons, ArrayList<Customer> customers,
 			ArrayList<Product> products) {
 		Scanner s;
@@ -200,7 +211,7 @@ public class FlatParser {
 			String productTokens[] = tokens[3].split(",");
 			for (int j = 0; j < productTokens.length; j++) {
 				String paramTokens[] = productTokens[j].split(":");
-				String productCode = paramTokens[0]; 
+				String productCode = paramTokens[0];
 				Product currentProduct = null;
 				for (Product item : products) {
 					if (productCode.equals(item.getCode())) {
@@ -224,12 +235,11 @@ public class FlatParser {
 					Product associatedRepair = null;
 					String repairCode;
 					if (paramTokens.length > 2) {
-						repairCode = paramTokens[2]; 
-					}
-					else {
+						repairCode = paramTokens[2];
+					} else {
 						repairCode = "";
 					}
-				
+
 					for (Product item : products) {
 						if (repairCode.equals(item.getCode())) {
 							associatedRepair = item;

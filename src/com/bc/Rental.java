@@ -49,10 +49,14 @@ public class Rental extends Product {
 		return daysRented;
 	}
 
+	public double getPrice() {
+		return ((dailyCost * daysRented) + cleaningFee - deposit);
+	}
+
 	@Override
 	public String toString() {
-		return "Rental [type=" + type + ", dailyCost=" + dailyCost + ", deposit=" + deposit + ", cleaningFee="
-				+ cleaningFee + ", daysRented=" + daysRented + "]";
+		return "(" + daysRented + " days @ $" + dailyCost + "/day + $" + cleaningFee + " cleaning fee, -$" + deposit
+				+ " refund)";
 	}
 
 }

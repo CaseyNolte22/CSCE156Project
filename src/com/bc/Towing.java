@@ -36,9 +36,13 @@ public class Towing extends Product {
 		return milesTowed;
 	}
 
+	public double getPrice() {
+		return (costPerMile * milesTowed);
+	}
+
 	@Override
 	public String toString() {
-		return "Towing [type=" + type + ", costPerMile=" + costPerMile + ", milesTowed=" + milesTowed + "]";
+		return "(" + milesTowed + " miles @ $" + costPerMile + "/mile)";
 	}
 
 }

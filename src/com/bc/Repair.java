@@ -43,10 +43,13 @@ public class Repair extends Product {
 		return hoursWorked;
 	}
 
+	public double getPrice() {
+		return (partsCost + (hourlyLaborCost * hoursWorked));
+	}
+
 	@Override
 	public String toString() {
-		return "Repair [type=" + type + ", partsCost=" + partsCost + ", hourlyLaborCost=" + hourlyLaborCost
-				+ ", hoursWorked=" + hoursWorked + "]";
+		return "(" + hoursWorked + " hours of labor @ $" + hourlyLaborCost + "/hour + $" + partsCost + " for parts)";
 	}
 
 }

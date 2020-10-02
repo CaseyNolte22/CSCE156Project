@@ -43,10 +43,13 @@ public class Concession extends Product {
 		return associatedRepair;
 	}
 
+	public double getPrice() {
+		return (unitCost * quantity);
+	}
+
 	@Override
 	public String toString() {
-		return "Concession [type=" + type + ", unitCost=" + unitCost + ", quantity=" + quantity + ", associatedRepair="
-				+ associatedRepair + "]";
+		return "(" + quantity + " units @ $" + unitCost + "/unit)";
 	}
 
 }

@@ -6,7 +6,7 @@
  */
 package com.bc;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 
 public class InvoiceReport {
@@ -16,6 +16,7 @@ public class InvoiceReport {
 		File personsFile = new File("data/Persons.dat");
 		File productsFile = new File("data/Products.dat");
 		File invoiceFile = new File("data/Invoices.dat");
+		File invoiceOutput = new File("data/output.txt");
 
 		ArrayList<Person> persons = new ArrayList<Person>();
 		persons = FlatParser.personParse(personsFile);
@@ -29,10 +30,7 @@ public class InvoiceReport {
 		ArrayList<Invoice> invoices = new ArrayList<Invoice>();
 		invoices = FlatParser.invoiceParse(invoiceFile, persons, customers, products);
 
-		for (Invoice item : invoices) {
-			System.out.println(item);
-		}
-
+		InvoiceWriter.invoicePrint(invoiceOutput, invoices);
 	}
 
 }
