@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import com.bc.Connector;
@@ -36,8 +37,8 @@ public class InvoiceData {
 	 * 1. Method that removes every person record from the database
 	 */
 	public static void removeAllPersons() {
-		removeAllCustomers();
-		
+		removeAllCusomters();
+
 		String emailQuery = "DELETE FROM Email";
 		Connection conn = Connector.establishConnection();
 		PreparedStatement ps = null;
@@ -51,7 +52,7 @@ public class InvoiceData {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-		
+
 		String personQuery = "DELETE FROM Person";
 
 		ps = null;
@@ -65,11 +66,11 @@ public class InvoiceData {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-		
+
 		try {
-			if(ps != null && !ps.isClosed())
+			if (ps != null && !ps.isClosed())
 				ps.close();
-			if(conn != null && !conn.isClosed())
+			if (conn != null && !conn.isClosed())
 				conn.close();
 		} catch (SQLException e) {
 			System.out.println("SQLException: ");
@@ -92,7 +93,90 @@ public class InvoiceData {
 	 */
 	public static void addPerson(String personCode, String firstName, String lastName, String street, String city,
 			String state, String zip, String country) {
-		/* TODO */
+		Connection conn = Connector.establishConnection();
+		
+		if (street.isEmpty()) {
+			street = "empty";
+		}
+		if (city.isEmpty()) {
+			city = "empty";
+		}
+		if (state.isEmpty()) {
+			state = "empty";
+		}
+		if (zip.isEmpty()) {
+			zip = "00000";
+		}
+		if (country.isEmpty()) {
+			country = "empty";
+		}
+		
+		String retrieveAddressQuery = "SELECT addressId FROM Address WHERE street = '" + street + "'";
+		String newAddressQuery = "INSERT INTO Address (street, city, state, zip, country) "
+				+ "VALUES ('"+ street + "','" + city + "','" + state + "','" + zip + "','" + country + "')";
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String addressId;
+		try {
+			ps = conn.prepareStatement(retrieveAddressQuery);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				addressId = rs.getString("addressId");
+				rs.close();
+				ps.close();
+			} else {
+
+				try {
+					ps.close();
+					ps = null;
+					ps = conn.prepareStatement(newAddressQuery);
+					ps.executeUpdate(newAddressQuery, Statement.RETURN_GENERATED_KEYS);
+					ResultSet keys = ps.getGeneratedKeys();
+					keys.next();
+					int key = keys.getInt(1);
+					addressId = Integer.toString(key);
+					rs.close();
+					ps.close();
+
+				} catch (SQLException e) {
+					System.out.println("SQLException: ");
+					e.printStackTrace();
+					throw new RuntimeException(e);
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		String newPersonQuery = "INSERT INTO Person (personCode, lastName, firstName, addressId) "
+				+ "SELECT '" + personCode + "', '" + lastName + "', '" + firstName + "', " + addressId;
+		ps = null;
+
+		try {
+			ps = conn.prepareStatement(newPersonQuery);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		try {
+			if (rs != null && !rs.isClosed())
+				rs.close();
+			if (ps != null && !ps.isClosed())
+				ps.close();
+			if (conn != null && !conn.isClosed())
+				conn.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
 	}
 
 	/**
@@ -103,19 +187,17 @@ public class InvoiceData {
 	 * @param email
 	 */
 	public static void addEmail(String personCode, String email) {
-		
+
 		if (personCode.isBlank() | email.isBlank()) {
 			System.out.println("Invalid Input. All fields must be filled");
 			System.exit(0);
 		}
-		
+
 		Connection conn = Connector.establishConnection();
 		PreparedStatement ps = null;
-		String emailQuery = "INSERT INTO Email"
-				+ "(email, personId) SELECT '" + email + "', p.personId FROM Person p WHERE "
-						+ "p.personcode = '" + personCode + "'";
-		System.out.println(emailQuery);
-		
+		String emailQuery = "INSERT INTO Email" + "(email, personId) SELECT '" + email
+				+ "', p.personId FROM Person p WHERE " + "p.personcode = '" + personCode + "'";
+
 		try {
 			ps = conn.prepareStatement(emailQuery);
 			ps.executeUpdate();
@@ -125,11 +207,11 @@ public class InvoiceData {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-		
+
 		try {
-			if(ps != null && !ps.isClosed())
+			if (ps != null && !ps.isClosed())
 				ps.close();
-			if(conn != null && !conn.isClosed())
+			if (conn != null && !conn.isClosed())
 				conn.close();
 		} catch (SQLException e) {
 			System.out.println("SQLException: ");
@@ -141,7 +223,7 @@ public class InvoiceData {
 	/**
 	 * 4. Method that removes every customer record from the database
 	 */
-	public static void removeAllCustomers() {
+	public static void removeAllCusomters() {
 		Connection conn = Connector.establishConnection();
 
 		String invoiceProductQuery = "DELETE FROM InvoiceProduct";
@@ -171,7 +253,7 @@ public class InvoiceData {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-		
+
 		String customerQuery = "DELETE FROM Customer";
 
 		ps = null;
@@ -185,11 +267,11 @@ public class InvoiceData {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-		
+
 		try {
-			if(ps != null && !ps.isClosed())
+			if (ps != null && !ps.isClosed())
 				ps.close();
-			if(conn != null && !conn.isClosed())
+			if (conn != null && !conn.isClosed())
 				conn.close();
 		} catch (SQLException e) {
 			System.out.println("SQLException: ");
@@ -213,14 +295,139 @@ public class InvoiceData {
 	 */
 	public static void addCustomer(String customerCode, String customerType, String primaryContactPersonCode,
 			String name, String street, String city, String state, String zip, String country) {
-		/* TODO */
+
+		Connection conn = Connector.establishConnection();
+		
+		name = name.replaceAll("'","");
+
+		if (street.isEmpty()) {
+			street = "empty";
+		}
+		if (city.isEmpty()) {
+			city = "empty";
+		}
+		if (state.isEmpty()) {
+			state = "empty";
+		}
+		if (zip.isEmpty()) {
+			zip = "00000";
+		}
+		if (country.isEmpty()) {
+			country = "empty";
+		}
+		
+		String retrieveAddressQuery = "SELECT addressId FROM Address WHERE street = '" + street + "'";
+		String newAddressQuery = "INSERT INTO Address (street, city, state, zip, country) " + "SELECT '" + street
+				+ "','" + city + "','" + state + "','" + zip + "','" + country + "'";
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String addressId;
+		try {
+			ps = conn.prepareStatement(retrieveAddressQuery);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				addressId = rs.getString("addressId");
+				rs.close();
+				ps.close();
+			} else {
+
+				try {
+					ps.close();
+					ps = null;
+					ps = conn.prepareStatement(newAddressQuery);
+					ps.executeUpdate(newAddressQuery, Statement.RETURN_GENERATED_KEYS);
+					ResultSet keys = ps.getGeneratedKeys();
+					keys.next();
+					int key = keys.getInt(1);
+					addressId = Integer.toString(key);
+					rs.close();
+					ps.close();
+
+				} catch (SQLException e) {
+					System.out.println("SQLException: ");
+					e.printStackTrace();
+					throw new RuntimeException(e);
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		String newCustomerQuery = "INSERT INTO Customer (customerCode, customerType, name, personId, addressId) "
+				+ "SELECT '" + customerCode + "', '" + customerType + "', '" + name + "', p.personId, " + addressId
+				+ "\r\n" + " FROM Person p WHERE p.personCode = '" + primaryContactPersonCode + "'";
+		
+		ps = null;
+
+		try {
+			ps = conn.prepareStatement(newCustomerQuery);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		try {
+			if (rs != null && !rs.isClosed())
+				rs.close();
+			if (ps != null && !ps.isClosed())
+				ps.close();
+			if (conn != null && !conn.isClosed())
+				conn.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
 	}
 
 	/**
 	 * 6. Removes all product records from the database
 	 */
 	public static void removeAllProducts() {
-		/* TODO */
+		String invoiceProductQuery = "DELETE FROM InvoiceProduct";
+		Connection conn = Connector.establishConnection();
+		PreparedStatement ps = null;
+
+		try {
+			ps = conn.prepareStatement(invoiceProductQuery);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		String productQuery = "DELETE FROM Product";
+
+		ps = null;
+
+		try {
+			ps = conn.prepareStatement(productQuery);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		try {
+			if (ps != null && !ps.isClosed())
+				ps.close();
+			if (conn != null && !conn.isClosed())
+				conn.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
@@ -231,7 +438,34 @@ public class InvoiceData {
 	 * @param unitCost
 	 */
 	public static void addConcession(String productCode, String productLabel, double unitCost) {
-		/* TODO */
+
+		Connection conn = Connector.establishConnection();
+		PreparedStatement ps = null;
+
+		String concessionQuery = "INSERT INTO Product (productCode, productType, label, unitCost) " + "VALUES ('"
+				+ productCode + "','C','" + productLabel + "'," + unitCost + ")";
+
+		try {
+			ps = conn.prepareStatement(concessionQuery);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		try {
+			if (ps != null && !ps.isClosed())
+				ps.close();
+			if (conn != null && !conn.isClosed())
+				conn.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
 	}
 
 	/**
@@ -243,7 +477,32 @@ public class InvoiceData {
 	 * @param laborRate
 	 */
 	public static void addRepair(String productCode, String productLabel, double partsCost, double laborRate) {
-		/* TODO */
+		Connection conn = Connector.establishConnection();
+		PreparedStatement ps = null;
+
+		String repairQuery = "INSERT INTO Product (productCode, productType, label, partsCost, hourlyLaborCost) "
+				+ "VALUES ('" + productCode + "','F','" + productLabel + "'," + partsCost + "," + laborRate + ")";
+
+		try {
+			ps = conn.prepareStatement(repairQuery);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		try {
+			if (ps != null && !ps.isClosed())
+				ps.close();
+			if (conn != null && !conn.isClosed())
+				conn.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
@@ -254,7 +513,34 @@ public class InvoiceData {
 	 * @param costPerMile
 	 */
 	public static void addTowing(String productCode, String productLabel, double costPerMile) {
-		/* TODO */
+
+		Connection conn = Connector.establishConnection();
+		PreparedStatement ps = null;
+
+		String towingQuery = "INSERT INTO Product (productCode, productType, label, costPerMile) " + "VALUES ('"
+				+ productCode + "','C','" + productLabel + "'," + costPerMile + ")";
+
+		try {
+			ps = conn.prepareStatement(towingQuery);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		try {
+			if (ps != null && !ps.isClosed())
+				ps.close();
+			if (conn != null && !conn.isClosed())
+				conn.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
 	}
 
 	/**
@@ -268,14 +554,78 @@ public class InvoiceData {
 	 */
 	public static void addRental(String productCode, String productLabel, double dailyCost, double deposit,
 			double cleaningFee) {
-		/* TODO */
+		Connection conn = Connector.establishConnection();
+		PreparedStatement ps = null;
+
+		String rentalQuery = "INSERT INTO Product (productCode, productType, label, dailyCost, deposit, cleaningFee) "
+				+ "VALUES ('" + productCode + "','R','" + productLabel + "'," + dailyCost + "," + deposit + ","
+				+ cleaningFee + ")";
+
+		try {
+			ps = conn.prepareStatement(rentalQuery);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		try {
+			if (ps != null && !ps.isClosed())
+				ps.close();
+			if (conn != null && !conn.isClosed())
+				conn.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
 	 * 11. Removes all invoice records from the database
 	 */
 	public static void removeAllInvoices() {
-		/* TODO */
+
+		String invoiceProductQuery = "DELETE FROM InvoiceProduct";
+		Connection conn = Connector.establishConnection();
+		PreparedStatement ps = null;
+
+		try {
+			ps = conn.prepareStatement(invoiceProductQuery);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		String invoiceQuery = "DELETE FROM Invoice";
+
+		ps = null;
+
+		try {
+			ps = conn.prepareStatement(invoiceQuery);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		try {
+			if (ps != null && !ps.isClosed())
+				ps.close();
+			if (conn != null && !conn.isClosed())
+				conn.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
@@ -286,7 +636,33 @@ public class InvoiceData {
 	 * @param customertCode
 	 */
 	public static void addInvoice(String invoiceCode, String ownerCode, String customerCode) {
-		/* TODO */
+		Connection conn = Connector.establishConnection();
+		PreparedStatement ps = null;
+
+		String invoiceQuery = "INSERT INTO Invoice (invoiceCode, customerId, personId) " + "SELECT '" + invoiceCode
+				+ "', c.customerId, p.personId FROM Customer c JOIN Person p " + "WHERE p.personCode = '" + ownerCode
+				+ "' AND c.customerCode = '" + customerCode + "'";
+
+		try {
+			ps = conn.prepareStatement(invoiceQuery);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		try {
+			if (ps != null && !ps.isClosed())
+				ps.close();
+			if (conn != null && !conn.isClosed())
+				conn.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
@@ -299,7 +675,34 @@ public class InvoiceData {
 	 * @param milesTowed
 	 */
 	public static void addTowingToInvoice(String invoiceCode, String productCode, double milesTowed) {
-		/* TODO */
+
+		Connection conn = Connector.establishConnection();
+		PreparedStatement ps = null;
+
+		String invoiceQuery = "INSERT INTO InvoiceProduct (productId, invoiceId, milesTowed) "
+				+ "SELECT p.productId, i.invoiceId, '" + milesTowed + "' FROM Product p " + "JOIN Invoice i "
+				+ "WHERE p.productCode = '" + productCode + "' AND i.invoiceCode = '" + invoiceCode + "'";
+
+		try {
+			ps = conn.prepareStatement(invoiceQuery);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		try {
+			if (ps != null && !ps.isClosed())
+				ps.close();
+			if (conn != null && !conn.isClosed())
+				conn.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
@@ -312,7 +715,34 @@ public class InvoiceData {
 	 * @param hoursWorked
 	 */
 	public static void addRepairToInvoice(String invoiceCode, String productCode, double hoursWorked) {
-		/* TODO */
+
+		Connection conn = Connector.establishConnection();
+		PreparedStatement ps = null;
+
+		String invoiceQuery = "INSERT INTO InvoiceProduct (productId, invoiceId, hoursWorked) "
+				+ "SELECT p.productId, i.invoiceId, '" + hoursWorked + "' FROM Product p " + "JOIN Invoice i "
+				+ "WHERE p.productCode = '" + productCode + "' AND i.invoiceCode = '" + invoiceCode + "'";
+
+		try {
+			ps = conn.prepareStatement(invoiceQuery);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		try {
+			if (ps != null && !ps.isClosed())
+				ps.close();
+			if (conn != null && !conn.isClosed())
+				conn.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
@@ -326,7 +756,34 @@ public class InvoiceData {
 	 * @param repairCode
 	 */
 	public static void addConcessionToInvoice(String invoiceCode, String productCode, int quantity, String repairCode) {
-		/* TODO */
+		Connection conn = Connector.establishConnection();
+		PreparedStatement ps = null;
+
+		String concessionQuery = "INSERT INTO InvoiceProduct (productId, invoiceId, quantity, associatedRepair) "
+				+ "SELECT p.productId, i.invoiceId, '" + quantity + "', '" + repairCode + "' FROM Product p "
+				+ "JOIN Invoice i WHERE p.productCode = '" + productCode + "' AND i.invoiceCode = '" + invoiceCode
+				+ "'";
+
+		try {
+			ps = conn.prepareStatement(concessionQuery);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		try {
+			if (ps != null && !ps.isClosed())
+				ps.close();
+			if (conn != null && !conn.isClosed())
+				conn.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
@@ -339,7 +796,34 @@ public class InvoiceData {
 	 * @param daysRented
 	 */
 	public static void addRentalToInvoice(String invoiceCode, String productCode, double daysRented) {
-		/* TODO */
+
+		Connection conn = Connector.establishConnection();
+		PreparedStatement ps = null;
+
+		String invoiceQuery = "INSERT INTO InvoiceProduct (productId, invoiceId, daysRented) "
+				+ "SELECT p.productId, i.invoiceId, '" + daysRented + "' FROM Product p " + "JOIN Invoice i "
+				+ "WHERE p.productCode = '" + productCode + "' AND i.invoiceCode = '" + invoiceCode + "'";
+
+		try {
+			ps = conn.prepareStatement(invoiceQuery);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		try {
+			if (ps != null && !ps.isClosed())
+				ps.close();
+			if (conn != null && !conn.isClosed())
+				conn.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 
 }

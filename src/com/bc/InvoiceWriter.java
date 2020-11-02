@@ -1,12 +1,11 @@
 /** 
- * Contains method for outputting a formatted file of invoice data
+ * Contains method for outputting invoice report to console
  * 
  * @author Casey Nolte
  * @author Jack Kieny
  */
 package com.bc;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class InvoiceWriter {
@@ -17,7 +16,7 @@ public class InvoiceWriter {
 	 * @param file
 	 * @param invoices
 	 */
-	public static void invoicePrint(File file, ArrayList<Invoice> invoices) {
+	public static void invoicePrint(ArrayList<Invoice> invoices) {
 		/**
 		 * This section generates the overall report
 		 */
