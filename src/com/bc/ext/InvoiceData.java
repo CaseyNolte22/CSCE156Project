@@ -367,9 +367,7 @@ public class InvoiceData {
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
-			System.out.println("SQLException: ");
-			e.printStackTrace();
-			throw new RuntimeException(e);
+			return;
 		}
 		try {
 			if (rs != null && !rs.isClosed())
@@ -518,7 +516,7 @@ public class InvoiceData {
 		PreparedStatement ps = null;
 
 		String towingQuery = "INSERT INTO Product (productCode, productType, label, costPerMile) " + "VALUES ('"
-				+ productCode + "','C','" + productLabel + "'," + costPerMile + ")";
+				+ productCode + "','T','" + productLabel + "'," + costPerMile + ")";
 
 		try {
 			ps = conn.prepareStatement(towingQuery);

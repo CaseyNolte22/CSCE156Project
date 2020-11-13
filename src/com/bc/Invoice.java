@@ -141,6 +141,21 @@ public class Invoice {
 		}
 		return discountTotal;
 	}
+	
+	/**
+	 * 
+	 * @return Total for a given invoice
+	 */
+	public double getTotal() {
+		double subtotal = this.getSubtotal();
+		double fees = this.getFees();
+		double discount = this.getConcessionDiscount() + this.getTowingDiscount();
+		double preTotal = (subtotal + discount);
+		double taxes = this.getTax(preTotal);
+		preTotal = (subtotal + discount + fees + taxes);
+		double postTotal = preTotal + this.getPostTaxDiscount(preTotal);
+		return postTotal;
+	}
 
 	@Override
 	public String toString() {

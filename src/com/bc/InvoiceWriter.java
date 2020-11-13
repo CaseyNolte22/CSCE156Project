@@ -6,7 +6,6 @@
  */
 package com.bc;
 
-import java.util.ArrayList;
 
 public class InvoiceWriter {
 	/**
@@ -16,7 +15,7 @@ public class InvoiceWriter {
 	 * @param file
 	 * @param invoices
 	 */
-	public static void invoicePrint(ArrayList<Invoice> invoices) {
+	public static void invoicePrint(LinkedList<Invoice> invoices) {
 		/**
 		 * This section generates the overall report
 		 */
