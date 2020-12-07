@@ -32,6 +32,10 @@ public class DataConverter {
 		JsonWrite.printJSON("data/Persons.json", persons, "persons");
 		JsonWrite.printJSON("data/Customers.json", customers, "customers");
 		JsonWrite.printJSON("data/Products.json", products, "products");
+		
+		XmlWrite.printXML("data/Persons.xml", persons);
+		XmlWrite.printXML("data/Customers.xml", customers);
+		XmlWrite.printXML("data/Products.xml", products);
 	}
 
 }
